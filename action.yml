@@ -1,0 +1,35 @@
+name: Post Comment to Issue
+description: A GitHub Action to post a comment to a GitHub issue using the GitHub API
+author: Louisiana Office of Technology Services
+
+inputs:
+  issue-number:
+    description: 'The issue number to post the comment to'
+    required: true
+  message:
+    description: 'The comment message to post'
+    required: true
+  token:
+    description: 'GitHub token with repository write access'
+    required: true
+  owner:
+    description: 'The owner of the repository (user or organization)'
+    required: true
+  repo-name:
+    description: 'The name of the repository'
+    required: true
+
+outputs:
+  result:
+    description: 'Result of the comment POST request ("success" or "failure")'
+    value: ${{ steps.action.outputs.result }}
+
+runs:
+  using: composite
+  steps:
+    - name: Post Comment to Issue
+      id: action
+      run: |
+        source ${{ github.action_path }}/action.sh        
+        post_comment "${{ inputs.issue-number }}" "${{ inputs.message }}" "${{ inputs.token }}" "${{ inputs.owner }}" "${{ inputs.repo-name }}"
+      shell: bash
