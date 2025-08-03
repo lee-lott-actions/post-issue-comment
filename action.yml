@@ -1,6 +1,6 @@
 name: Post Comment to Issue
 description: A GitHub Action to post a comment to a GitHub issue using the GitHub API
-author: Louisiana Office of Technology Services
+author: Lee Lott
 
 inputs:
   issue-number:
