@@ -40,7 +40,7 @@ This GitHub Action posts a comment to a specified GitHub issue using the GitHub 
        steps:
          - name: Post Comment
            id: comment
-           uses: lee-lott-actions/post-issue-comment@v1.0.0
+           uses: lee-lott-actions/post-issue-comment@v1
            with:
              issue-number: ${{ github.event.issue.number }}
              message: 'Thanks for the issue! We will review it soon.'
