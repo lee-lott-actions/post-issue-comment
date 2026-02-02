@@ -46,7 +46,7 @@ function Add-IssueComment {
         if ($response.StatusCode -eq 201) {
             Add-Content -Path $env:GITHUB_OUTPUT -Value "result=success"
         } else {
-			$errorMsg = "Error: Failed to post comment to issue #$IssueNumber. HTTP Status: $(response.StatusCode)"
+			$errorMsg = "Error: Failed to post comment to issue #$IssueNumber. HTTP Status: $($response.StatusCode)"
             Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
             Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=$errorMsg"
             Write-Host $errorMsg
