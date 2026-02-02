@@ -46,14 +46,15 @@ function Add-IssueComment {
         if ($response.StatusCode -eq 201) {
             Add-Content -Path $env:GITHUB_OUTPUT -Value "result=success"
         } else {
+			$errorMsg = "Error: Failed to post comment to issue #$IssueNumber. HTTP Status: $($response.StatusCode)"
             Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
-            Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=Failed to post comment to issue #$IssueNumber.  Status: $($response.StatusCode)"
-            Write-Host "Error: Failed to post comment to issue #$IssueNumber.  Status: $($response.StatusCode)"
+            Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=$errorMsg"
+            Write-Host $errorMsg
         }
     } catch {
-        $httpStatus = $_.Exception.Response.StatusCode.value__
-        Write-Host "Error: Failed to post comment to issue #$IssueNumber. Status: $httpStatus"
-        Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
-        Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=Failed to post comment to issue #$IssueNumber.  Status: $httpStatus"
+		$errorMsg = "Error: Failed to post comment to issue #$IssueNumber. Exception: $($_.Exception.Message)"
+		Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
+		Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=$errorMsg"
+		Write-Host $errorMsg
     }
 }
