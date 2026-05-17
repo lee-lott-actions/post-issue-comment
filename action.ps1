@@ -17,9 +17,7 @@ function Add-IssueComment {
         Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=Missing required parameters: issue_number, repo_name, message, owner, and token must be provided."
         Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
         return
-    }
-
-    Write-Host "Attempting to post comment to issue #$IssueNumber in $RepoName"
+    }   
 
     # Use MOCK_API if set, otherwise default to GitHub API
     $apiBaseUrl = $env:MOCK_API
@@ -33,15 +31,13 @@ function Add-IssueComment {
         "Content-Type" = "application/json"
     }
 
-    $jsonBody = @{
+    $body = @{
         body = $Message
     } | ConvertTo-Json
 
     try {
-        $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method Post -Body $jsonBody
-
-        Write-Host "API Response Code: $($response.StatusCode)"
-        Write-Host $response.Content
+		Write-Host "Attempting to post comment to issue #$IssueNumber in $RepoName"
+        $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method Post -Body $body -SkipHttpErrorCheck
 
         if ($response.StatusCode -eq 201) {
             Add-Content -Path $env:GITHUB_OUTPUT -Value "result=success"
