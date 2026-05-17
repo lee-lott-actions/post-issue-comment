@@ -32,4 +32,9 @@ runs:
       shell: pwsh
       run: |
         . "${{ github.action_path }}/action.ps1" 
-        Add-IssueComment "${{ inputs.issue-number }}" "${{ inputs.message }}" "${{ inputs.token }}" "${{ inputs.owner }}" "${{ inputs.repo-name }}"
+        Add-IssueComment `
+          -IssueNumber "${{ inputs.issue-number }}" `
+          -Message "${{ inputs.message }}" `
+          -Token "${{ inputs.token }}" `
+          -Owner "${{ inputs.owner }}" `
+          -RepoName "${{ inputs.repo-name }}"
